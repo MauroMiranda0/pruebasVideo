@@ -15,8 +15,11 @@ de codigo sin embargo
 """
 
 # Parámetros visuales
-width, height = 1280, 720
-bg_color = (25, 25, 25)
+# Cargamos la captura de pantalla de VS Code que servirá de fondo
+background_image_path = "vscode_background.png"
+background_image = Image.open(background_image_path).convert("RGB")
+width, height = background_image.size
+bg_color = (25, 25, 25)  # Color de fondo por si se necesita un tono base
 # Use a different base color for the code text itself, as the highlight function will apply specific colors
 text_color = (200, 200, 200) # Light grey base for general text not highlighted
 font_size = 24
@@ -165,7 +168,7 @@ contenido_actual = ""
 
 # 1. Pausa inicial en blanco (or with empty editor screen)
 for i in range(int(3 / duracion_por_frame)):  # Pausa de 3 segundos
-    img = Image.new("RGB", (width, height), bg_color)
+    img = background_image.copy()
     img.save(f"frames/inicio_{i:03d}.png")
     frames.append(f"frames/inicio_{i:03d}.png")
 
@@ -187,7 +190,7 @@ for i, letra in enumerate(codigo):
         line_number += 1
 
     for parpadeo in range(2):  # Two frames per letter (one with cursor, one without)
-        img = Image.new("RGB", (width, height), bg_color)
+        img = background_image.copy()
         draw = ImageDraw.Draw(img)
 
         try:
@@ -234,7 +237,7 @@ for i, letra in enumerate(codigo):
 contenido_final = lineas_completadas + linea_actual_en_escritura # All code at the end
 
 for i in range(int(4.5 / duracion_por_frame)): # 4.5 second pause
-    img = Image.new("RGB", (width, height), bg_color)
+    img = background_image.copy()
     draw = ImageDraw.Draw(img)
 
     try:
