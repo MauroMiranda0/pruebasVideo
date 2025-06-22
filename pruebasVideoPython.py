@@ -26,6 +26,7 @@ font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"
 line_spacing = 4
 margin_x, margin_y = 50, 50
 duracion_por_frame = 0.03 # Define the duration per frame here
+fps_salida = int(1 / duracion_por_frame)
 
 # Colores específicos para highlighting (using the updated scheme)
 number_color = (128, 128, 128) # Gris para los números de línea
@@ -271,7 +272,7 @@ for i in range(int(4.5 / duracion_por_frame)): # 4.5 second pause
 # 4. Create video
 clips = [ImageClip(f).set_duration(duracion_por_frame) for f in frames]
 video = concatenate_videoclips(clips, method="compose")
-video.write_videofile(output_video, fps=24)
+video.write_videofile(output_video, fps=fps_salida)
 
 # Cleanup
 shutil.rmtree("frames")
